@@ -162,7 +162,7 @@ def constfn(val):
 def learn(*, policy, env, nsteps, total_timesteps, ent_coef, lr,
           vf_coef=0.5, max_grad_norm=0.5, gamma=0.99, lam=0.95,
           log_interval=10, nminibatches=4, noptepochs=4, cliprange=0.2,
-          save_interval=0):
+          save_interval=10):
     if isinstance(lr, float):
         lr = constfn(lr)
     else:
