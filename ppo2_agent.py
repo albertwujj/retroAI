@@ -7,8 +7,8 @@ Train an agent on Sonic using PPO2 from OpenAI Baselines.
 import tensorflow as tf
 
 from baselines.common.vec_env.dummy_vec_env import DummyVecEnv
-import baselines.ppo2.ppo2 as ppo2
-import baselines.ppo2.policies as policies
+import ppo2
+import policies
 import gym_remote.exceptions as gre
 
 from sonic_util import make_env
