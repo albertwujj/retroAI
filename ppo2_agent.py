@@ -13,8 +13,11 @@ import gym_remote.exceptions as gre
 
 from sonic_util import make_env
 
+from baselines import logger
+
 def main():
     """Run PPO until the environment throws an exception."""
+    logger.configure(dir='saved_training')
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True # pylint: disable=E1101
     with tf.Session(config=config):

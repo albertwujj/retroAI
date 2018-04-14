@@ -164,7 +164,6 @@ def learn(*, policy, env, nsteps, total_timesteps, ent_coef, lr,
           log_interval=10, nminibatches=4, noptepochs=4, cliprange=0.2,
           save_interval=10):
 
-    logger.configure(dir='saved_training')
     if isinstance(lr, float):
         lr = constfn(lr)
     else:
