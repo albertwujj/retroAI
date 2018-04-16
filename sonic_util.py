@@ -8,6 +8,7 @@ import numpy as np
 from baselines.common.atari_wrappers import WarpFrame, FrameStack
 import gym_remote.client as grc
 import retro
+from retro_contest.local import make
 
 def make_env(stack=True, scale_rew=True):
     """
