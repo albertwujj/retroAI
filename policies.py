@@ -108,7 +108,8 @@ class CnnPolicy(object):
             h = nature_cnn(X)
             pi = fc(h, 'pi', nact, init_scale=0.01)
             vf = fc(h, 'v', 1)[:,0]
-
+        print("Im Here")
+        print(str(ac_space.n))
         self.pdtype = make_pdtype(ac_space)
         self.pd = self.pdtype.pdfromflat(pi)
 
