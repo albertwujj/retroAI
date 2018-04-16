@@ -14,13 +14,14 @@ def make_env(stack=True, scale_rew=True):
     """
     Create an environment with some standard wrappers.
     """
-    env = retro.make(game='SonicTheHedgehog-Genesis', state='LabyrinthZone.Act1')
+    env = make(game='SonicTheHedgehog-Genesis', state='LabyrinthZone.Act1')
     env = SonicDiscretizer(env)
     if scale_rew:
         env = RewardScaler(env)
     env = WarpFrame(env)
     if stack:
         env = FrameStack(env, 4)
+    env = AllowBacktracking(env)
     return env
 
 class SonicDiscretizer(gym.ActionWrapper):
