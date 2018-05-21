@@ -99,17 +99,15 @@ class LstmPolicy(object):
 
 class CnnPolicy(object):
 
-    def __init__(self, sess, ob_space, ac_space, nbatch, nsteps, reuse=False): #pylint: disable=W0613
+    def __init__(self, sess, ob_space, ac_space, nbatch, nsteps, scope="model"): #pylint: disable=W0613
         nh, nw, nc = ob_space.shape
         ob_shape = (nbatch, nh, nw, nc)
         nact = ac_space.n
         X = tf.placeholder(tf.uint8, ob_shape) #obs
-        with tf.variable_scope("model", reuse=reuse):
+        with tf.variable_scope(scope, reuse=tf.AUTO_REUSE):
             h = nature_cnn(X)
             pi = fc(h, 'pi', nact, init_scale=0.01)
             vf = fc(h, 'v', 1)[:,0]
-        print("Im Here")
-        print(str(ac_space.n))
         self.pdtype = make_pdtype(ac_space)
         self.pd = self.pdtype.pdfromflat(pi)
 
@@ -167,3 +165,4 @@ class MlpPolicy(object):
         self.vf = vf
         self.step = step
         self.value = value
+

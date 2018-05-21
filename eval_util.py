@@ -4,41 +4,22 @@ Environments and wrappers for Sonic training.
 
 import gym
 import numpy as np
-import retro
 
-from atari_wrappers import WarpFrame, FrameStack
+from baselines.common.atari_wrappers import WarpFrame, FrameStack
 import gym_remote.client as grc
 
-count = 0
-envs = []
-for game in retro.list_games():
-    if "Sonic" in game:
-        for state in retro.list_states(game):
-            envs.append((game, state))
-            count += 1
-
-def make_envs(stack=True, scale_rew=True, backtracking=True, num=count):
-    return [make_env(stack=stack,scale_rew=scale_rew,backtracking=backtracking,i=i) for i in range(num)]
-
-def make_env(stack=True, scale_rew=True, backtracking=True, i=0):
+def make_env(stack=True, scale_rew=True):
     """
     Create an environment with some standard wrappers.
     """
-    def _thunk():
-        name = envs[i]
-        env = retro.make(name[0],name[1])
-        env = SonicDiscretizer(env)
-        if scale_rew:
-            env = RewardScaler(env)
-        env = WarpFrame(env)
-        if stack:
-            env = FrameStack(env, 4)
-        if backtracking:
-            env = AllowBacktracking(env)
-        return env
-
-    return _thunk
-
+    env = grc.RemoteEnv('tmp/sock')
+    env = SonicDiscretizer(env)
+    if scale_rew:
+        env = RewardScaler(env)
+    env = WarpFrame(env)
+    if stack:
+        env = FrameStack(env, 4)
+    return env
 
 class SonicDiscretizer(gym.ActionWrapper):
     """

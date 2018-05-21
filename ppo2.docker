@@ -13,5 +13,7 @@ RUN . ~/venv/bin/activate && \
 
 ADD ppo2_agent.py ./agent.py
 ADD sonic_util.py .
+ADD eval_util.py .
+ADD checkpoints ./checkpoints
 
 CMD ["python", "-u", "/root/compo/agent.py"]
